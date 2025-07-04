@@ -117,7 +117,7 @@ MIT
 ---
 
 ## 🙏 Credits
-Developed as a college MERN stack project by [Your Name].
+Developed as a college MERN stack project.
 
 ---
 
