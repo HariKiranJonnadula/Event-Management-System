@@ -17,7 +17,7 @@ const EventDetails = () => {
       setLoading(true);
       setError('');
       try {
-        const res = await API.get(`/events/${id}`);
+        const res = await API.get(`/api/events/${id}`);
         setEvent(res.data);
       } catch (err) {
         setError('Failed to fetch event details');
@@ -31,7 +31,7 @@ const EventDetails = () => {
     e.preventDefault();
     setBookingStatus('');
     try {
-      await API.post('/bookings', { eventId: id, ticketCount });
+      await API.post('/api/bookings', { eventId: id, ticketCount });
       setBookingStatus('Booking successful!');
       setEvent({ ...event, seatsAvailable: event.seatsAvailable - ticketCount });
     } catch (err) {
@@ -44,7 +44,7 @@ const EventDetails = () => {
   if (!event) return null;
 
   return (
-    <div>
+    <div className="event-details-card">
       <h2>{event.title}</h2>
       <p><b>Date:</b> {new Date(event.date).toLocaleDateString()} <b>Time:</b> {event.time}</p>
       <p><b>Location:</b> {event.location}</p>
@@ -52,11 +52,11 @@ const EventDetails = () => {
       <p><b>Description:</b> {event.description}</p>
       <p><b>Price:</b> ₹{event.price}</p>
       <p><b>Seats Available:</b> {event.seatsAvailable}</p>
-      {event.imageUrl && <img src={event.imageUrl} alt={event.title} style={{ maxWidth: 400 }} />}
+      {event.imageUrl && <img src={event.imageUrl} alt={event.title} className="event-details-image" />}
       <hr />
       {user ? (
         event.seatsAvailable > 0 ? (
-          <form onSubmit={handleBooking}>
+          <form onSubmit={handleBooking} className="event-booking-form">
             <label>Tickets: </label>
             <input
               type="number"
@@ -68,9 +68,9 @@ const EventDetails = () => {
             />
             <button type="submit">Book Now</button>
           </form>
-        ) : <p style={{ color: 'red' }}>Sold Out</p>
-      ) : <p><i>Login to book tickets.</i></p>}
-      {bookingStatus && <p style={{ color: bookingStatus === 'Booking successful!' ? 'green' : 'red' }}>{bookingStatus}</p>}
+        ) : <p className="event-soldout-msg">Sold Out</p>
+      ) : <p className="event-login-msg"><i>Login to book tickets.</i></p>}
+      {bookingStatus && <p className={bookingStatus === 'Booking successful!' ? 'event-booking-success' : 'event-booking-error'}>{bookingStatus}</p>}
     </div>
   );
 };

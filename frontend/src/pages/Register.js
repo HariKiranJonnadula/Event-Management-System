@@ -15,7 +15,7 @@ const Register = () => {
     setError('');
     setSuccess('');
     try {
-      await API.post('/auth/register', form);
+      await API.post('/api/auth/register', form);
       setSuccess('Registration successful! Redirecting to login...');
       setTimeout(() => navigate('/login'), 1500);
     } catch (err) {
@@ -24,20 +24,20 @@ const Register = () => {
   };
 
   return (
-    <div>
+    <div className="auth-card">
       <h2>Register</h2>
       <form onSubmit={handleSubmit}>
-        <input name="name" placeholder="Name" value={form.name} onChange={handleChange} required /><br />
-        <input name="email" type="email" placeholder="Email" value={form.email} onChange={handleChange} required /><br />
-        <input name="password" type="password" placeholder="Password" value={form.password} onChange={handleChange} required /><br />
+        <input name="name" placeholder="Name" value={form.name} onChange={handleChange} required />
+        <input name="email" type="email" placeholder="Email" value={form.email} onChange={handleChange} required />
+        <input name="password" type="password" placeholder="Password" value={form.password} onChange={handleChange} required />
         <select name="role" value={form.role} onChange={handleChange}>
           <option value="user">User</option>
           <option value="admin">Admin</option>
-        </select><br />
+        </select>
         <button type="submit">Register</button>
       </form>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      {success && <p style={{ color: 'green' }}>{success}</p>}
+      {error && <p className="auth-error">{error}</p>}
+      {success && <p className="auth-success">{success}</p>}
     </div>
   );
 };

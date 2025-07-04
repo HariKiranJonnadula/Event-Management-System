@@ -13,7 +13,7 @@ const UserDashboard = () => {
     setLoading(true);
     setError('');
     try {
-      const res = await API.get(`/bookings/user/${user.userId}`);
+      const res = await API.get(`/api/bookings/user/${user.userId}`);
       setBookings(res.data);
     } catch (err) {
       setError('Failed to fetch bookings');
@@ -30,7 +30,7 @@ const UserDashboard = () => {
     if (!window.confirm('Are you sure you want to cancel this booking?')) return;
     setCancelStatus('');
     try {
-      await API.delete(`/bookings/${bookingId}`);
+      await API.delete(`/api/bookings/${bookingId}`);
       setCancelStatus('Booking cancelled successfully');
       setBookings(bookings.filter(b => b._id !== bookingId));
     } catch (err) {
@@ -43,7 +43,7 @@ const UserDashboard = () => {
   if (error) return <p style={{ color: 'red' }}>{error}</p>;
 
   return (
-    <div>
+    <div style={{ margin: '2rem' }}>
       <h2>My Bookings</h2>
       {cancelStatus && <p style={{ color: cancelStatus.includes('success') ? 'green' : 'red' }}>{cancelStatus}</p>}
       {bookings.length === 0 ? <p>No bookings found.</p> : (
@@ -67,7 +67,7 @@ const UserDashboard = () => {
                 <td>₹{booking.totalAmount}</td>
                 <td>Booked</td>
                 <td>
-                  <button onClick={() => handleCancel(booking._id)}>Cancel</button>
+                  <button className='cancel-btn' onClick={() => handleCancel(booking._id)}>Cancel</button>
                 </td>
               </tr>
             ))}

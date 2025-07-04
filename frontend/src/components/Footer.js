@@ -4,7 +4,7 @@ const Footer = () => (
   <footer className="footer">
     <div className="footer-links">
       <a href="/" className="footer-link">Home</a>
-      <a href="/events" className="footer-link">Events</a>
+      <a href="/" className="footer-link">Events</a>
       <a href="/login" className="footer-link">Login</a>
       <a href="/register" className="footer-link">Register</a>
     </div>
