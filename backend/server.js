@@ -9,7 +9,13 @@ import bookingRoutes from './routes/bookings.js';
 dotenv.config();
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: [
+    'http://localhost:3000',
+    'https://eventtify.netlify.app' 
+  ],
+  credentials: true
+}));
 app.use(express.json());
 
 // Auth Routes
