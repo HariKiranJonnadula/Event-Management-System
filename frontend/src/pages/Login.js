@@ -15,24 +15,23 @@ const Login = () => {
     e.preventDefault();
     setError('');
     try {
-      const res = await API.post('/auth/login', form);
+      const res = await API.post('/api/auth/login', form);
       login(res.data.token);
-      if (res.data.user.role === 'admin') navigate('/admin');
-      else navigate('/dashboard');
+      navigate('/');
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed');
     }
   };
 
   return (
-    <div>
+    <div className="auth-card">
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
-        <input name="email" type="email" placeholder="Email" value={form.email} onChange={handleChange} required /><br />
-        <input name="password" type="password" placeholder="Password" value={form.password} onChange={handleChange} required /><br />
+        <input name="email" type="email" placeholder="Email" value={form.email} onChange={handleChange} required />
+        <input name="password" type="password" placeholder="Password" value={form.password} onChange={handleChange} required />
         <button type="submit">Login</button>
       </form>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {error && <p className="auth-error">{error}</p>}
     </div>
   );
 };

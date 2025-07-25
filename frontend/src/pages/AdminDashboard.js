@@ -23,7 +23,7 @@ const AdminDashboard = () => {
 
   const fetchEvents = async () => {
     try {
-      const res = await API.get('/events');
+      const res = await API.get('/api/events');
       setEvents(res.data);
     } catch {
       setError('Failed to fetch events');
@@ -41,10 +41,10 @@ const AdminDashboard = () => {
     setStatus('');
     try {
       if (editingId) {
-        await API.put(`/events/${editingId}`, form);
+        await API.put(`/api/events/${editingId}`, form);
         setStatus('Event updated!');
       } else {
-        await API.post('/events', form);
+        await API.post('/api/events', form);
         setStatus('Event created!');
       }
       setForm(initialForm);
@@ -62,7 +62,7 @@ const AdminDashboard = () => {
 
   const handleDelete = async id => {
     try {
-      await API.delete(`/events/${id}`);
+      await API.delete(`/api/events/${id}`);
       setStatus('Event deleted!');
       fetchEvents();
     } catch {
@@ -72,7 +72,7 @@ const AdminDashboard = () => {
 
   const handleViewBookings = async eventId => {
     try {
-      const res = await API.get(`/bookings/event/${eventId}`);
+      const res = await API.get(`/api/bookings/event/${eventId}`);
       setBookings(prev => ({ ...prev, [eventId]: res.data }));
     } catch {
       setStatus('Failed to fetch bookings');
@@ -80,7 +80,7 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div>
+    <div style={{ margin: '2rem' }}>
       <h2>Admin Dashboard</h2>
       <h3>{editingId ? 'Edit Event' : 'Create Event'}</h3>
       <form onSubmit={handleSubmit} style={{ marginBottom: 24 }}>

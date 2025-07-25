@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import Home from './pages/Home';
 import EventDetails from './pages/EventDetails';
@@ -10,23 +10,40 @@ import AdminDashboard from './pages/AdminDashboard';
 import ProtectedRoute from './utils/ProtectedRoute';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import { useContext } from 'react';
+import AuthContext from './context/AuthContext';
+
+function AppRoutes() {
+  const { user } = useContext(AuthContext);
+  const location = useLocation();
+  const isAuthPage = location.pathname === '/login' || location.pathname === '/register';
+
+  if (!user && !isAuthPage) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return (
+    <div className="App">
+      <Navbar />
+      <main>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/event/:id" element={<EventDetails />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/dashboard" element={<ProtectedRoute><UserDashboard /></ProtectedRoute>} />
+          <Route path="/admin" element={<ProtectedRoute role="admin"><AdminDashboard /></ProtectedRoute>} />
+        </Routes>
+      </main>
+    </div>
+  );
+}
 
 function App() {
   return (
     <AuthProvider>
       <Router>
-        <div className="App">
-          <h1>Event Management System</h1>
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/event/:id" element={<EventDetails />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/dashboard" element={<ProtectedRoute><UserDashboard /></ProtectedRoute>} />
-            <Route path="/admin" element={<ProtectedRoute role="admin"><AdminDashboard /></ProtectedRoute>} />
-          </Routes>
-        </div>
+        <AppRoutes />
         <Footer />
       </Router>
     </AuthProvider>

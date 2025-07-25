@@ -18,7 +18,7 @@ const Home = () => {
       if (filters.title) params.title = filters.title;
       if (filters.date) params.date = filters.date;
       if (filters.category) params.category = filters.category;
-      const res = await API.get('/events', { params });
+      const res = await API.get('/api/events', { params });
       setEvents(res.data);
     } catch (err) {
       setError('Failed to fetch events');
@@ -38,21 +38,19 @@ const Home = () => {
       <Hero />
       <Features />
       <section id="events">
-        <h2 style={{ textAlign: 'center', marginTop: '2rem' }}>Upcoming Events</h2>
-        <div style={{ margin: '1.5rem auto', textAlign: 'center' }}>
+        <h2 className="section-title">Upcoming Events</h2>
+        <div className="event-filters">
           <input
             name="title"
             placeholder="Search by Title"
             value={filters.title}
             onChange={handleChange}
-            style={{ marginRight: 8 }}
           />
           <input
             name="date"
             type="date"
             value={filters.date}
             onChange={handleChange}
-            style={{ marginRight: 8 }}
           />
           <input
             name="category"
