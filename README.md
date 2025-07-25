@@ -153,11 +153,3 @@ MIT
 For questions, suggestions, or collaborations, please open an issue or contact the maintainers via GitHub.
 
 ---
-
-Let me know if you'd like to:
-
-* Add screenshots or a demo GIF
-* Write a LinkedIn post linking to this project
-* Deploy the site and add a hosted link to the README
-
-Happy to help!
